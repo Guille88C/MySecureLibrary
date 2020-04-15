@@ -1,5 +1,6 @@
 /*
-REFERENCE:
+REFERENCES:
+    https://medium.com/@josiassena/using-the-android-keystore-system-to-store-sensitive-information-3a56175a454b
     https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3
  */
 
@@ -15,16 +16,15 @@ import com.gcuestab.mycrypt.common.KEY_ALIAS_AES
 import com.gcuestab.mycrypt.common.KEY_ALIAS_RSA
 import com.gcuestab.mycrypt.common.KEY_STORE_NAME
 import java.math.BigInteger
+import java.security.Key
 import java.security.KeyStore
-import java.security.PrivateKey
-import java.security.PublicKey
 import java.security.spec.AlgorithmParameterSpec
 import java.util.*
 import javax.crypto.KeyGenerator
-import javax.crypto.SecretKey
 import javax.security.auth.x500.X500Principal
 
-internal class KeyStoreManager() {
+@SuppressLint("InlinedApi")
+internal class KeyStoreManager {
 
     private val keyStore by lazy {
         KeyStore.getInstance(KEY_STORE_NAME).apply {
@@ -32,7 +32,21 @@ internal class KeyStoreManager() {
         }
     }
 
-    fun getPublicKey(context: Context): PublicKey {
+    private val keyRsaGenerator by lazy {
+        KeyGenerator.getInstance(
+            KeyProperties.KEY_ALGORITHM_RSA,
+            KEY_STORE_NAME
+        )
+    }
+
+    private val keyAesGenerator by lazy {
+        KeyGenerator.getInstance(
+            KeyProperties.KEY_ALGORITHM_AES,
+            KEY_STORE_NAME
+        )
+    }
+
+    fun getPublicKey(context: Context): Key {
         generateRSAKey(context = context)
         return (keyStore.getEntry(KEY_ALIAS_RSA, null) as KeyStore.PrivateKeyEntry).certificate.publicKey
     }
@@ -40,13 +54,8 @@ internal class KeyStoreManager() {
     @SuppressLint("InlinedApi")
     private fun generateRSAKey(context: Context) {
         if (!keyStore.containsAlias(KEY_ALIAS_RSA)) {
-            val keyGenerator = KeyGenerator.getInstance(
-                KeyProperties.KEY_ALGORITHM_RSA,
-                KEY_STORE_NAME
-            )
-
-            keyGenerator.init(getSpec(context = context))
-            keyGenerator.generateKey()
+            keyRsaGenerator.init(getSpec(context = context))
+            keyRsaGenerator.generateKey()
         }
     }
 
@@ -64,13 +73,13 @@ internal class KeyStoreManager() {
             .build()
     }
 
-    fun getPrivateKey(context: Context): PrivateKey {
+    fun getPrivateKey(context: Context): Key {
         generateRSAKey(context = context)
         return (keyStore.getEntry(KEY_ALIAS_RSA, null) as KeyStore.PrivateKeyEntry).privateKey
     }
 
     @RequiresApi(api = 23)
-    fun getSecretKey(): SecretKey {
+    fun getSecretKey(): Key {
         generateAESKey()
         return (keyStore.getEntry(KEY_ALIAS_AES, null) as KeyStore.SecretKeyEntry).secretKey
     }
@@ -78,12 +87,8 @@ internal class KeyStoreManager() {
     @RequiresApi(api = 23)
     private fun generateAESKey() {
         if (!keyStore.containsAlias(KEY_ALIAS_AES)) {
-            val keyGenerator = KeyGenerator.getInstance(
-                KeyProperties.KEY_ALGORITHM_AES,
-                KEY_STORE_NAME
-            )
-            keyGenerator.init(getSpec())
-            keyGenerator.generateKey()
+            keyAesGenerator.init(getSpec())
+            keyAesGenerator.generateKey()
         }
     }
 
