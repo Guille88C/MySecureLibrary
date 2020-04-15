@@ -1,3 +1,9 @@
+/*
+REFERENCES:
+    https://medium.com/@josiassena/using-the-android-keystore-system-to-store-sensitive-information-3a56175a454b
+    https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3
+ */
+
 package com.gcuestab.mycrypt.keystore
 
 import android.security.keystore.KeyGenParameterSpec

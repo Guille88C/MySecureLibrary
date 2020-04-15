@@ -1,3 +1,8 @@
+/*
+REFERENCE:
+    https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3
+ */
+
 package com.gcuestab.mycrypt.keystore
 
 import android.annotation.SuppressLint
