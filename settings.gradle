@@ -1,2 +1,3 @@
 rootProject.name='My Scure Application'
 include ':app'
+include ':mycrypt'

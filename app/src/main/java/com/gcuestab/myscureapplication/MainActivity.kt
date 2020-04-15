@@ -2,7 +2,7 @@ package com.gcuestab.myscureapplication
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.gcuestab.myscureapplication.crypt.MyCrypt
+import com.gcuestab.mycrypt.crypt.MyCrypt
 import kotlinx.android.synthetic.main.activity_main.*
 
 
