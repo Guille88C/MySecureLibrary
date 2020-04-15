@@ -1,11 +1,6 @@
 package com.gcuestab.mycrypt.crypt
 
 import com.gcuestab.mycrypt.common.*
-import com.gcuestab.mycrypt.common.AES_MODE
-import com.gcuestab.mycrypt.common.FIXED_IV
-import com.gcuestab.mycrypt.common.RSA_MODE
-import com.gcuestab.mycrypt.common.SSL_PROVIDER
-import com.gcuestab.mycrypt.common.TAG_LENGTH
 import java.security.Key
 import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
