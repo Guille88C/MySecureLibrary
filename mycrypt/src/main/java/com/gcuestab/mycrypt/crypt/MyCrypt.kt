@@ -29,8 +29,15 @@ class MyCrypt {
         MyDecrypt(keyStoreManager = keyStoreManager, newKeyStoreManager = newKeyStoreManager)
     }
 
-    fun encrypt(context: Context, text: String) = myEncrypt.encrypt(context = context, text = text)
+    fun encrypt(context: Context, text: String) = try {
+        myEncrypt.encrypt(context = context, text = text)
+    } catch (_: Throwable) {
+        ""
+    }
 
-    fun decrypt(context: Context, encryptedText: String): String =
+    fun decrypt(context: Context, encryptedText: String): String = try {
         myDecrypt.decrypt(context = context, encryptedText = encryptedText)
+    } catch (_: Throwable) {
+        ""
+    }
 }

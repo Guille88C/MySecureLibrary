@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">My Scure Application</string>
-    <string name="text_to_encrypt">Text to encrypt</string>
-    <string name="encrypt">Encrypt</string>
-    <string name="decrypt">Decrypt</string>
+    <string name="user">User</string>
+    <string name="pass">Pass</string>
+    <string name="save">Save</string>
+    <string name="restore">Restore</string>
 </resources>

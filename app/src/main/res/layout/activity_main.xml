@@ -7,36 +7,36 @@
     tools:context=".MainActivity">
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etActivityMain"
+        android:id="@+id/etActivityMainUser"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="@string/text_to_encrypt"
+        android:hint="@string/user"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvActivityMain"
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etActivityMainPass"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:hint="@string/pass"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etActivityMain"
-        tools:text="Decrypted text" />
+        app:layout_constraintTop_toBottomOf="@+id/etActivityMainUser" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bActivityMainEncrypt"
+        android:id="@+id/bActivityMainSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/encrypt"
+        android:text="@string/save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bActivityMainDecrypt"
+        android:id="@+id/bActivityMainRestore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/decrypt"
+        android:text="@string/restore"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
