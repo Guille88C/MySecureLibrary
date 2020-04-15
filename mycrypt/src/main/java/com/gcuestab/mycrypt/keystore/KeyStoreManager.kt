@@ -29,7 +29,6 @@ internal class KeyStoreManager(private val keyStore: KeyStore) {
     @SuppressLint("InlinedApi")
     private fun generateRSAKey(context: Context) {
         if (!keyStore.containsAlias(KEY_ALIAS_RSA)) {
-            // Generate a key pair for encryption
             val start: Calendar = Calendar.getInstance()
             val end: Calendar = Calendar.getInstance()
             end.add(Calendar.YEAR, 30)
