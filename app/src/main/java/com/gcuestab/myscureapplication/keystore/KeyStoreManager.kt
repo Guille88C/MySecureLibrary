@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyProperties
+import com.gcuestab.myscureapplication.common.KEY_ALIAS_RSA
+import com.gcuestab.myscureapplication.common.KEY_STORE_NAME
 import java.math.BigInteger
 import java.security.KeyPairGenerator
 import java.security.KeyStore
@@ -12,32 +14,23 @@ import java.security.PublicKey
 import java.util.*
 import javax.security.auth.x500.X500Principal
 
-class KeyStoreManager() {
-    private val keyStoreName = "AndroidKeyStore"
-    private val keyAliasRSA = "alias_rsa"
-
-    private val keyStore by lazy {
-        KeyStore.getInstance(keyStoreName).apply {
-            load(null)
-        }
-    }
-
+internal class KeyStoreManager(private val keyStore: KeyStore) {
     fun getPublicKey(context: Context): PublicKey {
         generateRSAKey(context = context)
-        return (keyStore.getEntry(keyAliasRSA, null) as KeyStore.PrivateKeyEntry).certificate.publicKey
+        return (keyStore.getEntry(KEY_ALIAS_RSA, null) as KeyStore.PrivateKeyEntry).certificate.publicKey
     }
 
     @Suppress("DEPRECATION")
     @SuppressLint("InlinedApi")
     private fun generateRSAKey(context: Context) {
-        if (!keyStore.containsAlias(keyAliasRSA)) {
+        if (!keyStore.containsAlias(KEY_ALIAS_RSA)) {
             // Generate a key pair for encryption
             val start: Calendar = Calendar.getInstance()
             val end: Calendar = Calendar.getInstance()
             end.add(Calendar.YEAR, 30)
             val spec = KeyPairGeneratorSpec.Builder(context)
-                .setAlias(keyAliasRSA)
-                .setSubject(X500Principal("CN=${keyAliasRSA}"))
+                .setAlias(KEY_ALIAS_RSA)
+                .setSubject(X500Principal("CN=${KEY_ALIAS_RSA}"))
                 .setSerialNumber(BigInteger.TEN)
                 .setStartDate(start.time)
                 .setEndDate(end.time)
@@ -45,7 +38,7 @@ class KeyStoreManager() {
             val kpg: KeyPairGenerator =
                 KeyPairGenerator.getInstance(
                     KeyProperties.KEY_ALGORITHM_RSA,
-                    keyStoreName
+                    KEY_STORE_NAME
                 )
             kpg.initialize(spec)
             kpg.generateKeyPair()
@@ -54,6 +47,6 @@ class KeyStoreManager() {
 
     fun getPrivateKey(context: Context): PrivateKey {
         generateRSAKey(context = context)
-        return (keyStore.getEntry(keyAliasRSA, null) as KeyStore.PrivateKeyEntry).privateKey
+        return (keyStore.getEntry(KEY_ALIAS_RSA, null) as KeyStore.PrivateKeyEntry).privateKey
     }
 }
