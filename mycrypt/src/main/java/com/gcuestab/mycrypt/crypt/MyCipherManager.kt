@@ -5,7 +5,7 @@ import java.security.Key
 import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
 
-class MyCipherManager {
+internal class MyCipherManager {
     fun getRsaCipher(key: Key, encrypt: Boolean): Cipher =
         Cipher.getInstance(RSA_MODE, SSL_PROVIDER).apply {
             init(getMode(encrypt = encrypt), key)
