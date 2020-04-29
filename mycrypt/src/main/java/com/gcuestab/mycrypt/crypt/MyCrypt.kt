@@ -1,24 +1,30 @@
 package com.gcuestab.mycrypt.crypt
 
-import android.content.Context
 import android.os.Build
 import android.util.Base64
+import java.security.spec.AlgorithmParameterSpec
 
-class MyCrypt {
+class MyCrypt internal constructor(
+    private val oldAlgorithmSpec: AlgorithmParameterSpec,
+    private val newAlgorithmSpec: AlgorithmParameterSpec
+) {
 
     private val keyStoreManager by lazy {
-        KeyStoreManager()
+        KeyStoreManager(oldAlgorithmSpec = oldAlgorithmSpec, newAlgorithmSpec = newAlgorithmSpec)
     }
 
     private val myCipherManager by lazy {
         MyCipherManager()
     }
 
-    fun encrypt(context: Context, text: String) = try {
+    fun encrypt(text: String) = try {
         val cipher = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             myCipherManager.getAesCipher(key = keyStoreManager.getSecretKey(), encrypt = true)
         } else {
-            myCipherManager.getRsaCipher(key = keyStoreManager.getPublicKey(context = context), encrypt = true)
+            myCipherManager.getRsaCipher(
+                key = keyStoreManager.getPublicKey(),
+                encrypt = true
+            )
         }
 
         val encodedBytes: ByteArray = cipher.doFinal(text.toByteArray())
@@ -27,11 +33,14 @@ class MyCrypt {
         ""
     }
 
-    fun decrypt(context: Context, encryptedText: String): String = try {
+    fun decrypt(encryptedText: String): String = try {
         val cipher = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             myCipherManager.getAesCipher(key = keyStoreManager.getSecretKey(), encrypt = false)
         } else {
-            myCipherManager.getRsaCipher(key = keyStoreManager.getPrivateKey(context = context), encrypt = false)
+            myCipherManager.getRsaCipher(
+                key = keyStoreManager.getPrivateKey(),
+                encrypt = false
+            )
         }
 
         val decodedBytes =

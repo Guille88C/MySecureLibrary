@@ -6,24 +6,21 @@ REFERENCES:
 
 package com.gcuestab.mycrypt.crypt
 
-import android.content.Context
-import android.security.KeyPairGeneratorSpec
-import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.annotation.RequiresApi
 import com.gcuestab.mycrypt.common.KEY_ALIAS_AES
 import com.gcuestab.mycrypt.common.KEY_ALIAS_RSA
 import com.gcuestab.mycrypt.common.KEY_STORE_NAME
-import java.math.BigInteger
 import java.security.Key
 import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
-import java.util.*
 import javax.crypto.KeyGenerator
-import javax.security.auth.x500.X500Principal
 
-internal class KeyStoreManager {
+internal class KeyStoreManager(
+    private val oldAlgorithmSpec: AlgorithmParameterSpec,
+    private val newAlgorithmSpec: AlgorithmParameterSpec
+) {
 
     private val keyStore by lazy {
         KeyStore.getInstance(KEY_STORE_NAME).apply {
@@ -45,34 +42,23 @@ internal class KeyStoreManager {
         )
     }
 
-    fun getPublicKey(context: Context): Key {
-        generateRSAKey(context = context)
-        return (keyStore.getEntry(KEY_ALIAS_RSA, null) as KeyStore.PrivateKeyEntry).certificate.publicKey
+    fun getPublicKey(): Key {
+        generateRSAKey()
+        return (keyStore.getEntry(
+            KEY_ALIAS_RSA,
+            null
+        ) as KeyStore.PrivateKeyEntry).certificate.publicKey
     }
 
-    private fun generateRSAKey(context: Context) {
+    private fun generateRSAKey() {
         if (!keyStore.containsAlias(KEY_ALIAS_RSA)) {
-            keyRsaGenerator.initialize(getSpec(context = context))
+            keyRsaGenerator.initialize(oldAlgorithmSpec)
             keyRsaGenerator.generateKeyPair()
         }
     }
 
-    private fun getSpec(context: Context): AlgorithmParameterSpec {
-        val start: Calendar = Calendar.getInstance()
-        val end: Calendar = Calendar.getInstance()
-        end.add(Calendar.YEAR, 30)
-
-        return KeyPairGeneratorSpec.Builder(context)
-            .setAlias(KEY_ALIAS_RSA)
-            .setSubject(X500Principal("CN=$KEY_ALIAS_RSA"))
-            .setSerialNumber(BigInteger.TEN)
-            .setStartDate(start.time)
-            .setEndDate(end.time)
-            .build()
-    }
-
-    fun getPrivateKey(context: Context): Key {
-        generateRSAKey(context = context)
+    fun getPrivateKey(): Key {
+        generateRSAKey()
         return (keyStore.getEntry(KEY_ALIAS_RSA, null) as KeyStore.PrivateKeyEntry).privateKey
     }
 
@@ -85,19 +71,8 @@ internal class KeyStoreManager {
     @RequiresApi(api = 23)
     private fun generateAESKey() {
         if (!keyStore.containsAlias(KEY_ALIAS_AES)) {
-            keyAesGenerator.init(getSpec())
+            keyAesGenerator.init(newAlgorithmSpec)
             keyAesGenerator.generateKey()
         }
     }
-
-    @RequiresApi(api = 23)
-    private fun getSpec(): AlgorithmParameterSpec =
-        KeyGenParameterSpec.Builder(
-            KEY_ALIAS_AES,
-            KeyProperties.PURPOSE_ENCRYPT or KeyProperties.PURPOSE_DECRYPT
-        )
-            .setBlockModes(KeyProperties.BLOCK_MODE_GCM)
-            .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_NONE)
-            .setRandomizedEncryptionRequired(false)
-            .build()
 }
