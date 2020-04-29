@@ -6,7 +6,6 @@ REFERENCES:
 
 package com.gcuestab.mycrypt.crypt
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
@@ -17,13 +16,13 @@ import com.gcuestab.mycrypt.common.KEY_ALIAS_RSA
 import com.gcuestab.mycrypt.common.KEY_STORE_NAME
 import java.math.BigInteger
 import java.security.Key
+import java.security.KeyPairGenerator
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
 import java.util.*
 import javax.crypto.KeyGenerator
 import javax.security.auth.x500.X500Principal
 
-@SuppressLint("InlinedApi")
 internal class KeyStoreManager {
 
     private val keyStore by lazy {
@@ -33,7 +32,7 @@ internal class KeyStoreManager {
     }
 
     private val keyRsaGenerator by lazy {
-        KeyGenerator.getInstance(
+        KeyPairGenerator.getInstance(
             KeyProperties.KEY_ALGORITHM_RSA,
             KEY_STORE_NAME
         )
@@ -51,11 +50,10 @@ internal class KeyStoreManager {
         return (keyStore.getEntry(KEY_ALIAS_RSA, null) as KeyStore.PrivateKeyEntry).certificate.publicKey
     }
 
-    @SuppressLint("InlinedApi")
     private fun generateRSAKey(context: Context) {
         if (!keyStore.containsAlias(KEY_ALIAS_RSA)) {
-            keyRsaGenerator.init(getSpec(context = context))
-            keyRsaGenerator.generateKey()
+            keyRsaGenerator.initialize(getSpec(context = context))
+            keyRsaGenerator.generateKeyPair()
         }
     }
 
