@@ -44,7 +44,7 @@ private fun provideNewAlgorithmSpec(): AlgorithmParameterSpec =
         .setRandomizedEncryptionRequired(false)
         .build()
 
-val keyStore by lazy {
+private val keyStore by lazy {
     KeyStore.getInstance(KEY_STORE_NAME).apply {
         load(null)
     }

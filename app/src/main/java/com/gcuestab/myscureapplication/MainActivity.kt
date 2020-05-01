@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         sharedPreferences.edit()
     }
 
-    private val myCrypt by lazy {
+    private val myEncrypt by lazy {
         provideEncrypt(context = this)
     }
 
@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity() {
 
         bActivityMainSave?.setOnClickListener {
             val user = etActivityMainUser.text.toString()
-            val userEncrypted = myCrypt.encrypt(text = user)
+            val userEncrypted = myEncrypt.encrypt(text = user)
             sharedEdit.putString(USER, userEncrypted).apply()
 
             val pass = etActivityMainPass.text.toString()
-            val passEncrypted = myCrypt.encrypt(text = pass)
+            val passEncrypted = myEncrypt.encrypt(text = pass)
             sharedEdit.putString(PASS, passEncrypted).apply()
 
             etActivityMainUser.setText("")
@@ -40,11 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         bActivityMainRestore?.setOnClickListener {
             val userEncrypted = sharedPreferences.getString(USER, "") ?: ""
-            val user = myCrypt.decrypt(encryptedText = userEncrypted)
+            val user = myEncrypt.decrypt(encryptedText = userEncrypted)
             etActivityMainUser.setText(user)
 
             val passEncrypted = sharedPreferences.getString(PASS, "") ?: ""
-            val pass = myCrypt.decrypt(encryptedText = passEncrypted)
+            val pass = myEncrypt.decrypt(encryptedText = passEncrypted)
             etActivityMainPass.setText(pass)
         }
     }
