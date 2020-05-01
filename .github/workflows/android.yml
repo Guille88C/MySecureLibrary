@@ -32,8 +32,8 @@ jobs:
     runs-on: macOS-latest
     strategy:
       matrix:
-        api-level: [21, 23, 29]
-        arch: [x86, x86_64]
+        api-level: [21]
+        arch: [x86]
     steps:
     - name: checkout
       uses: actions/checkout@v2
@@ -43,4 +43,4 @@ jobs:
       with:
         api-level: ${{ matrix.api-level }}
         arch: ${{ matrix.arch }}
-        script: ./gradlew :myencrypt:connectedAndroidTest
+        script: ./gradlew connectedCheck
