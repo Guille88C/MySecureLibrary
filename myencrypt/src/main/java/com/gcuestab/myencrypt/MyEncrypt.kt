@@ -1,9 +1,9 @@
-package com.gcuestab.mycrypt.crypt
+package com.gcuestab.myencrypt
 
 import android.util.Base64
-import com.gcuestab.mycrypt.crypt.cipher.MyCipher
+import com.gcuestab.myencrypt.cipher.MyCipher
 
-class MyCrypt internal constructor(
+class MyEncrypt internal constructor(
     private val cipher: MyCipher
 ) {
 

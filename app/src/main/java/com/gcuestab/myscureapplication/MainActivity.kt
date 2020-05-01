@@ -3,7 +3,7 @@ package com.gcuestab.myscureapplication
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.gcuestab.mycrypt.crypt.provideCrypt
+import com.gcuestab.myencrypt.provideEncrypt
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val myCrypt by lazy {
-        provideCrypt(context = this)
+        provideEncrypt(context = this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

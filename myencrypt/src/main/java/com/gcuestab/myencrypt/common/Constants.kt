@@ -1,4 +1,4 @@
-package com.gcuestab.mycrypt.common
+package com.gcuestab.myencrypt.common
 
 internal const val KEY_STORE_NAME = "AndroidKeyStore"
 internal const val KEY_ALIAS_RSA = "alias_rsa"

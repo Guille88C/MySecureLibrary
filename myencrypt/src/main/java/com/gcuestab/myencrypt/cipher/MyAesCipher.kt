@@ -1,10 +1,10 @@
-package com.gcuestab.mycrypt.crypt.cipher
+package com.gcuestab.myencrypt.cipher
 
 import androidx.annotation.RequiresApi
-import com.gcuestab.mycrypt.common.AES_MODE
-import com.gcuestab.mycrypt.common.FIXED_IV
-import com.gcuestab.mycrypt.common.TAG_LENGTH
-import com.gcuestab.mycrypt.crypt.key.KeyAes
+import com.gcuestab.myencrypt.common.AES_MODE
+import com.gcuestab.myencrypt.common.FIXED_IV
+import com.gcuestab.myencrypt.common.TAG_LENGTH
+import com.gcuestab.myencrypt.key.KeyAes
 import javax.crypto.Cipher
 import javax.crypto.spec.GCMParameterSpec
 

@@ -1,4 +1,4 @@
-package com.gcuestab.mycrypt.crypt
+package com.gcuestab.myencrypt
 
 import android.content.Context
 import android.os.Build
@@ -6,13 +6,13 @@ import android.security.KeyPairGeneratorSpec
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import androidx.annotation.RequiresApi
-import com.gcuestab.mycrypt.common.KEY_ALIAS_AES
-import com.gcuestab.mycrypt.common.KEY_ALIAS_RSA
-import com.gcuestab.mycrypt.common.KEY_STORE_NAME
-import com.gcuestab.mycrypt.crypt.cipher.MyAesCipher
-import com.gcuestab.mycrypt.crypt.cipher.MyRsaCipher
-import com.gcuestab.mycrypt.crypt.key.KeyAes
-import com.gcuestab.mycrypt.crypt.key.KeyRsa
+import com.gcuestab.myencrypt.cipher.MyAesCipher
+import com.gcuestab.myencrypt.cipher.MyRsaCipher
+import com.gcuestab.myencrypt.common.KEY_ALIAS_AES
+import com.gcuestab.myencrypt.common.KEY_ALIAS_RSA
+import com.gcuestab.myencrypt.common.KEY_STORE_NAME
+import com.gcuestab.myencrypt.key.KeyAes
+import com.gcuestab.myencrypt.key.KeyRsa
 import java.math.BigInteger
 import java.security.KeyStore
 import java.security.spec.AlgorithmParameterSpec
@@ -73,14 +73,14 @@ private fun provideMyRsaCipher(context: Context) =
         )
     )
 
-private var myCrypt: MyCrypt? = null
+private var myCrypt: MyEncrypt? = null
 
 @Synchronized
-fun provideCrypt(context: Context): MyCrypt =
+fun provideEncrypt(context: Context): MyEncrypt =
     myCrypt ?: if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-        MyCrypt(cipher = provideMyAesCipher())
+        MyEncrypt(cipher = provideMyAesCipher())
     } else {
-        MyCrypt(cipher = provideMyRsaCipher(context = context))
+        MyEncrypt(cipher = provideMyRsaCipher(context = context))
     }.also { crypt ->
         myCrypt = crypt
     }

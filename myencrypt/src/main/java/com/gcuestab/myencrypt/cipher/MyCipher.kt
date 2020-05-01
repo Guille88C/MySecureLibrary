@@ -1,4 +1,4 @@
-package com.gcuestab.mycrypt.crypt.cipher
+package com.gcuestab.myencrypt.cipher
 
 import javax.crypto.Cipher
 

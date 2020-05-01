@@ -1,4 +1,4 @@
-package com.gcuestab.mycrypt.crypt
+package com.gcuestab.myencrypt
 
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -7,13 +7,14 @@ import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 
-class MyCryptTest {
+class MyEncryptTest {
 
-    lateinit var crypt: MyCrypt
+    lateinit var crypt: MyEncrypt
 
     @BeforeEach
     fun setUp() {
-        crypt = provideCrypt(context = InstrumentationRegistry.getInstrumentation().context)
+        crypt =
+            provideEncrypt(context = InstrumentationRegistry.getInstrumentation().context)
     }
 
     @DisplayName(value = "Given empty text")

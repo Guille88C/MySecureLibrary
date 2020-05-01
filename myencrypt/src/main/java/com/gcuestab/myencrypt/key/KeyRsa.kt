@@ -4,11 +4,11 @@ REFERENCES:
     https://medium.com/@ericfu/securely-storing-secrets-in-an-android-application-501f030ae5a3
  */
 
-package com.gcuestab.mycrypt.crypt.key
+package com.gcuestab.myencrypt.key
 
 import android.security.keystore.KeyProperties
-import com.gcuestab.mycrypt.common.KEY_ALIAS_RSA
-import com.gcuestab.mycrypt.common.KEY_STORE_NAME
+import com.gcuestab.myencrypt.common.KEY_ALIAS_RSA
+import com.gcuestab.myencrypt.common.KEY_STORE_NAME
 import java.security.Key
 import java.security.KeyPairGenerator
 import java.security.KeyStore

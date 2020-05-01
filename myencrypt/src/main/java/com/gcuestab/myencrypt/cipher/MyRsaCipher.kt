@@ -1,8 +1,8 @@
-package com.gcuestab.mycrypt.crypt.cipher
+package com.gcuestab.myencrypt.cipher
 
-import com.gcuestab.mycrypt.common.RSA_MODE
-import com.gcuestab.mycrypt.common.SSL_PROVIDER
-import com.gcuestab.mycrypt.crypt.key.KeyRsa
+import com.gcuestab.myencrypt.common.RSA_MODE
+import com.gcuestab.myencrypt.common.SSL_PROVIDER
+import com.gcuestab.myencrypt.key.KeyRsa
 import javax.crypto.Cipher
 
 internal class MyRsaCipher(private val keyStoreRsa: KeyRsa) :
