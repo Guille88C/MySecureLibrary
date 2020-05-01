@@ -2,6 +2,7 @@ package com.gcuestab.myencrypt
 
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
@@ -19,7 +20,7 @@ class MyEncryptTest {
     fun givenEmptyText_whenEncrypt_thenResultIsNotEmpty() {
         val text = ""
         val result = crypt.encrypt(text = text)
-        assert(result.isNotEmpty())
+        assertTrue(result.isNotEmpty())
     }
 
     @Test
@@ -33,14 +34,14 @@ class MyEncryptTest {
     fun givenANotEmptyText_whenEncrypt_thenResultIsNotEmpty() {
         val text = "My name is Test"
         val result = crypt.encrypt(text = text)
-        assert(result.isNotEmpty())
+        assertTrue(result.isNotEmpty())
     }
 
     @Test
-    fun givenANotEmptyText_whenDecrypt_thenResultIsNotEmpty() {
+    fun givenANotEmptyText_whenDecrypt_thenResultIsEmpty() {
         val text = "My name is Test"
         val result = crypt.decrypt(encryptedText = text)
-        assert(result.isNotEmpty())
+        assertTrue(result.isEmpty())
     }
 
     @Test
