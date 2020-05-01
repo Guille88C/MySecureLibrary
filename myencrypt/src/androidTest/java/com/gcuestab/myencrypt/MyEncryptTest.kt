@@ -20,7 +20,7 @@ class MyEncryptTest {
     fun givenEmptyText_whenEncrypt_thenResultIsNotEmpty() {
         val text = ""
         val result = crypt.encrypt(text = text)
-        assertTrue(result.isEmpty())
+        assertTrue(result.isNotEmpty())
     }
 
     @Test
