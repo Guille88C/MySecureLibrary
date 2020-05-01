@@ -13,7 +13,7 @@ on:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -28,19 +28,11 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew clean build
         
-  test:
-    runs-on: macOS-latest
-    strategy:
-      matrix:
-        api-level: [21]
-        arch: [x86]
-    steps:
     - name: checkout
       uses: actions/checkout@v2
-
+    
     - name: run tests
       uses: reactivecircus/android-emulator-runner@v2
       with:
-        api-level: ${{ matrix.api-level }}
-        arch: ${{ matrix.arch }}
+        api-level: 29
         script: ./gradlew connectedCheck
