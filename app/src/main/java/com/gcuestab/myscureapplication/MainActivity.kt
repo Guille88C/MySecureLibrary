@@ -3,7 +3,7 @@ package com.gcuestab.myscureapplication
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.gcuestab.mycrypt.crypt.MyCrypt
+import com.gcuestab.mycrypt.crypt.provideCrypt
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -18,7 +18,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val myCrypt by lazy {
-        MyCrypt()
+        provideCrypt(context = this)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,11 +27,11 @@ class MainActivity : AppCompatActivity() {
 
         bActivityMainSave?.setOnClickListener {
             val user = etActivityMainUser.text.toString()
-            val userEncrypted = myCrypt.encrypt(context = this, text = user)
+            val userEncrypted = myCrypt.encrypt(text = user)
             sharedEdit.putString(USER, userEncrypted).apply()
 
             val pass = etActivityMainPass.text.toString()
-            val passEncrypted = myCrypt.encrypt(context = this, text = pass)
+            val passEncrypted = myCrypt.encrypt(text = pass)
             sharedEdit.putString(PASS, passEncrypted).apply()
 
             etActivityMainUser.setText("")
@@ -40,11 +40,11 @@ class MainActivity : AppCompatActivity() {
 
         bActivityMainRestore?.setOnClickListener {
             val userEncrypted = sharedPreferences.getString(USER, "") ?: ""
-            val user = myCrypt.decrypt(context = this, encryptedText = userEncrypted)
+            val user = myCrypt.decrypt(encryptedText = userEncrypted)
             etActivityMainUser.setText(user)
 
             val passEncrypted = sharedPreferences.getString(PASS, "") ?: ""
-            val pass = myCrypt.decrypt(context = this, encryptedText = passEncrypted)
+            val pass = myCrypt.decrypt(encryptedText = passEncrypted)
             etActivityMainPass.setText(pass)
         }
     }
